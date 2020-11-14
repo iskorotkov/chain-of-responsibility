@@ -1,21 +1,16 @@
 ﻿using System;
 using FizzBuzz;
 
-while (true)
+var handler = new FizzBuzzHandler
 {
-    var input = Console.ReadLine();
-    if (!int.TryParse(input, out var request))
-    {
-        Console.WriteLine("Введите число");
-        continue;
-    }
-
-    var chain = new FizzHandler
+    Next = new FizzHandler
     {
         Next = new BuzzHandler()
-    };
-
-    Console.WriteLine(chain.Handle(request));
+    }
+};
+for (var request = 1; request <= 100; request++)
+{
+    Console.WriteLine(handler.Handle(request));
 }
 
 namespace FizzBuzz
@@ -23,27 +18,21 @@ namespace FizzBuzz
     public abstract class BaseHandler
     {
         public BaseHandler? Next { get; init; }
+        public virtual string Handle(int request) => Next?.Handle(request) ?? request.ToString();
+    }
 
-        public string Handle(int request)
-        {
-            var result = CanHandle(request) ? GetResponse(request) : "";
-            var nextResult = Next?.GetResponse(request) ?? "";
-            return result + nextResult;
-        }
-
-        protected abstract bool CanHandle(int request);
-        protected abstract string GetResponse(int request);
+    public class FizzBuzzHandler : BaseHandler
+    {
+        public override string Handle(int request) => request % 15 == 0 ? "FizzBuzz" : base.Handle(request);
     }
 
     public class FizzHandler : BaseHandler
     {
-        protected override bool CanHandle(int request) => request % 3 == 0;
-        protected override string GetResponse(int request) => "Fizz";
+        public override string Handle(int request) => request % 3 == 0 ? "Fizz" : base.Handle(request);
     }
 
     public class BuzzHandler : BaseHandler
     {
-        protected override bool CanHandle(int request) => request % 5 == 0;
-        protected override string GetResponse(int request) => "Buzz";
+        public override string Handle(int request) => request % 5 == 0 ? "Buzz" : base.Handle(request);
     }
 }
