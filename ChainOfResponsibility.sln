@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FizzBuzz", "src\FizzBuzz\FizzBuzz.csproj", "{A6FB1D80-F17A-487E-8B3F-4E5A207F4A63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{C6D73937-6AE3-49E4-8FE6-64D99D24D7BA}"
+ProjectSection(SolutionItems) = preProject
+	README.md = README.md
+	.gitignore = .gitignore
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth", "src\Auth\Auth.csproj", "{CF7EED6C-631B-47DE-889A-8F3A111B2C7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6FB1D80-F17A-487E-8B3F-4E5A207F4A63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6FB1D80-F17A-487E-8B3F-4E5A207F4A63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6FB1D80-F17A-487E-8B3F-4E5A207F4A63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6FB1D80-F17A-487E-8B3F-4E5A207F4A63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF7EED6C-631B-47DE-889A-8F3A111B2C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7EED6C-631B-47DE-889A-8F3A111B2C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7EED6C-631B-47DE-889A-8F3A111B2C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF7EED6C-631B-47DE-889A-8F3A111B2C7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
