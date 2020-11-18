@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Auth;
 
+// Pros:
+// - SRP
+// - OCP
+// - complexity and amount of code scales significantly better
+// - pattern is easy to understand and use
+// Cons:
+// - more code in simple cases
+
 var user = new UserData("iskorotkov", "ChainOfResponsibility");
 var a1 = new Authenticator(useCache: false, blockBruteForce: false);
 Console.WriteLine($"Authenticated and authorized: {a1.Authenticate(user)}");
@@ -71,7 +79,7 @@ namespace Auth
             return IsCached(user) || base.Execute(user);
         }
 
-        private bool IsCached(UserData user) => GetCache().Any(u => u == user.Username);
+        private bool IsCached(UserData user) => GetCache().Contains(user.Username);
         private static string[] GetCache() => new[] { "iskorotkov" };
     }
 
