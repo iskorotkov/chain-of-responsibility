@@ -4,9 +4,9 @@ using NaiveRouting;
 
 // Pros:
 // - can add (remove, modify) handlers at runtime
-// - easy to write and use
 // - SRP
-// - OCP
+// Cons:
+// - OCP violated
 
 var router = new Router<string>
 {
@@ -17,9 +17,11 @@ var router = new Router<string>
         new Route<string>("*", "Error 404. Nothing here")
     }
 };
+
 Console.WriteLine($"/home: {router.Route("/home")}");
 Console.WriteLine($"/about: {router.Route("/about")}");
 Console.WriteLine($"/pricing: {router.Route("/pricing")}");
+
 router.Routes.Insert(0, new Route<string>("/pricing", "Basic: $99.00, premium: $199.00"));
 Console.WriteLine($"/pricing: {router.Route("/pricing")}");
 

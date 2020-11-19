@@ -3,44 +3,57 @@ using Routing;
 
 // Pros:
 // - can add (remove, modify) handlers at runtime
-// - easy to use for client
 // - SRP
 // - OCP
 
-var router = new Rule<string>("/home", "Welcome to website",
-    new Rule<string>("/about", "Genius. Playboy. Philanthropist.",
-        new Rule<string>("*", "Error 404. Nothing here")));
+var router = new MatchPattern<string>("/home", "Welcome to website",
+    new MatchPattern<string>("/about", "Genius. Playboy. Philanthropist.",
+        new MatchAll<string>("Error 404. Nothing here")));
 
 Console.WriteLine($"/home: {router.Route("/home")}");
 Console.WriteLine($"/about: {router.Route("/about")}");
 Console.WriteLine($"/pricing: {router.Route("/pricing")}");
 
-router = new Rule<string>("/pricing", "Basic: $99.00, premium: $199.00", router);
+router = new MatchPattern<string>("/pricing", "Basic: $99.00, premium: $199.00", router);
 Console.WriteLine($"/pricing: {router.Route("/pricing")}");
 
 namespace Routing
 {
-    public class Rule<T>
+    public abstract class Rule<T>
     {
-        public Rule(string pattern, T content, Rule<T>? next = null)
+        public Rule(T content, Rule<T>? next = null)
         {
-            Next = next;
-            Pattern = pattern;
             Content = content;
+            Next = next;
         }
 
-        public Rule<T>? Next { get; set; }
-        public string Pattern { get; set; }
         public T Content { get; set; }
+        public Rule<T>? Next { get; set; }
 
-        public T? Route(string request)
+        public virtual T? Route(string request) => Next != null ? Next.Route(request) : default;
+    }
+
+    public class MatchPattern<T> : Rule<T>
+    {
+        public MatchPattern(string pattern, T content, Rule<T>? next = null) : base(content, next) =>
+            Pattern = pattern;
+
+        public string Pattern { get; set; }
+
+        public override T? Route(string request)
         {
-            if (Pattern == "*" || string.Equals(request, Pattern, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return Content;
-            }
-
-            return Next != null ? Next.Route(request) : default;
+            return string.Equals(request, Pattern, StringComparison.InvariantCultureIgnoreCase)
+                ? Content
+                : base.Route(request);
         }
+    }
+
+    public class MatchAll<T> : Rule<T>
+    {
+        public MatchAll(T content, Rule<T>? next = null) : base(content, next)
+        {
+        }
+
+        public override T? Route(string request) => Content;
     }
 }
