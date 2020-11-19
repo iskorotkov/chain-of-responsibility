@@ -7,31 +7,29 @@ using NaiveRouting;
 // - easy to write and use
 // - SRP
 // - OCP
-// Cons:
-// - handlers have no particular order
 
 var router = new Router<string>
 {
     Routes =
     {
-        ["/home"] = "Welcome to website",
-        ["/about"] = "Genius. Playboy. Philanthropist.",
-        ["*"] = "Error 404. Nothing here"
+        new Route<string>("/home", "Welcome to website"),
+        new Route<string>("/about", "Genius. Playboy. Philanthropist."),
+        new Route<string>("*", "Error 404. Nothing here")
     }
 };
-
 Console.WriteLine($"/home: {router.Route("/home")}");
 Console.WriteLine($"/about: {router.Route("/about")}");
 Console.WriteLine($"/pricing: {router.Route("/pricing")}");
-
-router.Routes.Add("/pricing", "Basic: $99.00, premium: $199.00");
+router.Routes.Insert(0, new Route<string>("/pricing", "Basic: $99.00, premium: $199.00"));
 Console.WriteLine($"/pricing: {router.Route("/pricing")}");
 
 namespace NaiveRouting
 {
+    public sealed record Route<T>(string Pattern, T Content);
+
     public class Router<T>
     {
-        public Dictionary<string, T> Routes { get; } = new();
+        public List<Route<T>> Routes { get; } = new();
 
         public T? Route(string request)
         {

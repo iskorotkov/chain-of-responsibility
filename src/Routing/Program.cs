@@ -6,8 +6,6 @@ using Routing;
 // - easy to use for client
 // - SRP
 // - OCP
-// Cons:
-// - more code to handle request passing
 
 var router = new Rule<string>("/home", "Welcome to website",
     new Rule<string>("/about", "Genius. Playboy. Philanthropist.",
