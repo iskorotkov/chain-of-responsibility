@@ -6,3 +6,4 @@ Examples for my slides about CoR behavioral pattern.
 
 - FizzBuzz
 - Authentication + authorization
+- Web server routing
